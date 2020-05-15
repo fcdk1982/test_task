@@ -67,6 +67,9 @@ class StatsView(LoginRequiredMixin, ListView):
         return context
 
     def get_user_data(self) -> dict:
+        """
+        get  user's stats  info from DB
+        """
         user_data = self.queryset.filter(
             create_by=self.request.user
         ).aggregate(
@@ -76,12 +79,18 @@ class StatsView(LoginRequiredMixin, ListView):
         return user_data
 
     def get_total_data(self) -> dict:
+        """
+        get  all  stats  info from DB
+        """
         all_users_data = self.queryset.aggregate(
             products=Count('id'),
             avg_price=Avg('price'))
         return all_users_data
 
     def data_with_conditions(self) -> int:
+        """
+        get  data with conditions if exist else 0
+        """
         if self.queryset.filter(create_by=self.request.user, name__length__gt=self.name_length).exists():
             data = self.queryset.filter(
                 create_by=self.request.user, name__length__gt=self.name_length).aggregate(
@@ -97,6 +106,9 @@ class StatsView(LoginRequiredMixin, ListView):
 class IncreaseView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs) -> HttpResponseRedirect:
+        """
+        increase all user's product price (if exist)
+        """
         user = self.request.user
         qs = Product.objects.filter(create_by=user)
         if qs.exists():
