@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block header %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'products:create_url' %}">Додати товар</a>
+        <a href="{% url 'products:stats_url' user.id %}">Статистика</a>
+        <hr>
+    {% endif %}
+{% endblock %}
+{% block body %}
+
+{% endblock %}
+</body>
+</html>

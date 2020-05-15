@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    Статистика
+{% endblock %}
+{% block body %}
+
+    <h3>Статистичні дані</h3>
+    <hr>
+    {% if total_data.products %}
+
+        <p>Загальна кількість товарів: {{ total_data.products }}</p>
+        <p>Середня сума всіх товарів: {{ total_data.avg_price|floatformat:2 }}</p>
+        <p>Сума товарів за умовою: {{ sum|floatformat:2 }}</p>
+
+        {% if user_data.products %}
+            <p>Кількість товарів користувача: {{ user_data.products }}</p>
+            <p>Максимальна вартість товару: {{ user_data.max_price|floatformat:2 }}</p>
+            <p>Сума товарів користувача: {{ user_data.sum_price|floatformat:2 }}</p>
+            <a href="{% url 'products:increase_url'  user.id %}">
+                <button>Збільшити ціну</button>
+            </a>
+        {% else %}
+            <p>Користувач ще не додав товари</p>
+        {% endif %}
+    {% else %}
+        Товари відсутні
+    {% endif %}
+{% endblock %}

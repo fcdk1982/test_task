@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+    Сторінка входу
+{% endblock %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Ввійти</button>
+    </form>
+
+{% endblock %}
